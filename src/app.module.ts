@@ -43,6 +43,10 @@ import { FileFolder } from './files/file.model'
                 autoLoadModels: true,
                 sync: { alter: true },
                 ssl: true,
+                dialectOptions:{
+                    rejectUnauthorized: false,
+                    require: true,
+                }
             }
         ),
         UserModule,
