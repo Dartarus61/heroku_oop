@@ -30,17 +30,20 @@ import { FileFolder } from './files/file.model'
         ServeStaticModule.forRoot({
             rootPath: path.resolve(__dirname, 'static'),
         }),
-        SequelizeModule.forRoot({
-            dialect: 'postgres',
-            host: process.env.DB_HOST /* || 'localhost' */,
+        SequelizeModule.forRoot(
+            /*  dialect: 'postgres',
+            host: process.env.DB_HOST,
             port: 5432,
-            username: process.env.DB_USER /* || 'postgres' */,
-            password: process.env.DB_PASSWORD /* || 'postgres' */,
-            database: process.env.DB_NAME /* || 'tryoop' */,
-            models: [User, UPost, Role, UserRoles, Comment, History, Details, Chapter, SubChapt, FileFolder],
-            autoLoadModels: true,
-            sync: { alter: true },
-        }),
+            username: process.env.DB_USER ,
+            password: process.env.DB_PASSWORD ,
+            database: process.env.DB_NAME , */
+            {
+                uri: process.env.DATABASE_URL,
+                models: [User, UPost, Role, UserRoles, Comment, History, Details, Chapter, SubChapt, FileFolder],
+                autoLoadModels: true,
+                sync: { alter: true },
+            }
+        ),
         UserModule,
         AuthModule,
         PostModule,
