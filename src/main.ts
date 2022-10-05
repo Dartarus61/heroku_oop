@@ -18,6 +18,6 @@ async function bootstrap() {
 
     //app.useGlobalPipes(new ValidationPipe())
 
-    await app.listen(PORT, () => console.log(`server started on ${process.env.PORT}`, process.env))
+    await app.listen(PORT, () => console.log(`server started on ${process.env.PORT}`))
 }
 bootstrap()
