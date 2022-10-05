@@ -42,6 +42,7 @@ import { FileFolder } from './files/file.model'
                 models: [User, UPost, Role, UserRoles, Comment, History, Details, Chapter, SubChapt, FileFolder],
                 autoLoadModels: true,
                 sync: { alter: true },
+                ssl: true,
             }
         ),
         UserModule,
