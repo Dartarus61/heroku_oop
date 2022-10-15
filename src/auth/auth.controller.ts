@@ -16,7 +16,7 @@ export class AuthController {
     @ApiResponse({ status: 201, type: User })
     @Post('/registration')
     reg(@Body() dto: CreateUserDto) {
-        return this.AuthService.reg(dto)
+        return this.AuthService.registration(dto)
     }
 
     @ApiOperation({ summary: 'Авторизация в аккаунт' })

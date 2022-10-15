@@ -1,8 +1,8 @@
 import { HttpException, Injectable, HttpStatus } from '@nestjs/common'
 import { InjectModel } from '@nestjs/sequelize'
+import { Op } from 'sequelize'
 import { Chapter } from 'src/chapters/chapter.model'
 import { ChaptersService } from 'src/chapters/chapters.service'
-import { SubChapt } from 'src/chapters/subchapters.model'
 import { Comment } from 'src/comment/comment.model'
 import { FileFolder } from 'src/files/file.model'
 import { FilesService } from 'src/files/files.service'
@@ -116,8 +116,8 @@ export class PostService {
         return postWithComments
     }
 
-    async GetAll() {
-        const posts = await this.postRepository.findAll({ include: [Chapter, SubChapt, Comment] })
+    async getPostBySubChapters(id: number) {
+        const posts = await this.postRepository.findAll({ where: { chapterrId: id } })
         return posts
     }
 }

@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post, UseGuards } from '@nestjs/common'
+import { Body, Controller, Get, Param, Post, UseGuards } from '@nestjs/common'
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger'
 import { Roles } from 'src/auth/roles-auth.decorator'
 import { RolesGuard } from 'src/auth/roles.guard'
@@ -8,7 +8,6 @@ import { CreateUserDto } from './dto/create_user.dto'
 import { UpdateUserDto } from './dto/UpdateUser.dto'
 import { User } from './user.model'
 import { UserService } from './user.service'
-
 @ApiTags('Пользователи')
 @Controller('user')
 export class UserController {
@@ -22,6 +21,12 @@ export class UserController {
     create(@Body() Dto: CreateUserDto) {
         return this.UserService.createUser(Dto)
     }
+
+    @Get('/activ/:value')
+    activation(@Param('value') value:string) {
+        return this.UserService.activate(value)
+    }
+
 
     @ApiOperation({ summary: 'Поиск пользователя по почте' })
     @ApiResponse({ status: 200, type: User })

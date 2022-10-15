@@ -22,11 +22,4 @@ export class RoleController {
     getByValue(@Param('value') value: string) {
         return this.roleService.getRoleByValue(value)
     }
-
-    @ApiOperation({ summary: 'Получение ролей' })
-    @ApiResponse({ status: 201, type: [Role] })
-    @Get('/all')
-    GetAll() {
-        return this.roleService.GetAll()
-    }
 }

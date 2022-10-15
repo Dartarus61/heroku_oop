@@ -48,7 +48,7 @@ constructor(@InjectModel(FileFolder) private fileRepository:typeof FileFolder){}
         return ArrOfObjectByFiles
     }
 
-    async GetFileToUser(postId:number) {
-        
+    async GetFileToUser(name:string) {
+        //TODO:сделать выгрузку файлов(картинок) в контексте всей статьи. уточнить у Алексея, если забуду
     }
 }

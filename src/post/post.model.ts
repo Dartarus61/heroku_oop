@@ -11,7 +11,6 @@ import {
     Table,
 } from 'sequelize-typescript'
 import { Chapter } from 'src/chapters/chapter.model'
-import { SubChapt } from 'src/chapters/subchapters.model'
 import { Comment } from 'src/comment/comment.model'
 import { FileFolder } from 'src/files/file.model'
 import { User } from 'src/user/user.model'
@@ -53,12 +52,12 @@ export class UPost extends Model<UPost, PostCreationAttrs> {
     @HasMany(() => Comment)
     comments: Comment[]
 
-    @ForeignKey(() => SubChapt)
+    /* @ForeignKey(() => Chapter)
     @Column({ type: DataType.INTEGER })
     subchapterId: number
 
     @BelongsTo(() => SubChapt)
-    subChapt: SubChapt
+    subChapt: SubChapt */
 
     @ForeignKey(() => Chapter)
     @Column({ type: DataType.INTEGER })

@@ -19,7 +19,6 @@ import { History } from './backup/backup-history.model'
 import { Details } from './backup/backup-details.model'
 import { ChaptersModule } from './chapters/chapters.module'
 import { Chapter } from './chapters/chapter.model'
-import { SubChapt } from './chapters/subchapters.model'
 import { FileFolder } from './files/file.model'
 
 @Module({
@@ -39,7 +38,7 @@ import { FileFolder } from './files/file.model'
             database: process.env.DB_NAME , */
             {
                 uri: process.env.DATABASE_URL,
-                models: [User, UPost, Role, UserRoles, Comment, History, Details, Chapter, SubChapt, FileFolder],
+                models: [User, UPost, Role, UserRoles, Comment, History, Details, Chapter, FileFolder],
                 autoLoadModels: true,
                 sync: { alter: true },
                 dialectOptions:{

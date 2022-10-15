@@ -1,7 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger'
 import { BelongsTo, BelongsToMany, Column, DataType, ForeignKey, HasMany, Model, Table } from 'sequelize-typescript'
 import { UPost } from 'src/post/post.model'
-import { SubChapt } from './subchapters.model'
 
 @Table({ tableName: 'chapter' })
 export class Chapter extends Model<Chapter> {
@@ -18,9 +17,15 @@ export class Chapter extends Model<Chapter> {
     @Column({ type: DataType.STRING, allowNull: false })
     name: string
 
+    @Column({ type: DataType.INTEGER, allowNull: true })
+    idParent: number
+
+    @Column({ type: DataType.STRING, allowNull: false })
+    path: string
+
     @HasMany(() => UPost)
     posts: UPost[]
 
-    @HasMany(() => SubChapt)
-    subChapt: SubChapt[]
+    /* @HasMany(() => SubChapt)
+    subChapt: SubChapt[] */
 }

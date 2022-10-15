@@ -15,9 +15,4 @@ export class RoleService {
         const role = await this.roleRepository.create(dto)
         return role
     }
-
-    async GetAll() {
-        const roles = await this.roleRepository.findAll()
-        return roles
-    }
 }
