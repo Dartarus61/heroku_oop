@@ -20,11 +20,26 @@ import { Details } from './backup/backup-details.model'
 import { ChaptersModule } from './chapters/chapters.module'
 import { Chapter } from './chapters/chapter.model'
 import { FileFolder } from './files/file.model'
-
+import { MailerModule } from '@nestjs-modules/mailer'
+import { EjsAdapter } from '@nestjs-modules/mailer/dist/adapters/ejs.adapter'
 @Module({
     imports: [
+        MailerModule.forRoot({
+            transport: 'smtps://project.oop@mail.ru:PFw6RrKEef2J8jkWdfHs@smtp.mail.ru',
+            defaults: {
+                from: '"no reply" <project.oop@mail.ru>',
+            },
+            template: {
+                dir: __dirname + '/templates',
+                adapter: new EjsAdapter(),
+                options: {
+                    strict: true,
+                },
+            },
+        }),
         ConfigModule.forRoot({
             envFilePath: `.env`,
+            isGlobal: true,
         }),
         ServeStaticModule.forRoot({
             rootPath: path.resolve(__dirname, 'static'),
