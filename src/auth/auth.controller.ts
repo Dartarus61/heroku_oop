@@ -45,6 +45,8 @@ export class AuthController {
     @ApiResponse({ status: 201, type: User })
     @Post('/refresh')
     refresh(@Req() req: Request) {
+        console.log(req.headers)
+
         return this.AuthService.checkIt(req.headers.authorization)
     }
 }

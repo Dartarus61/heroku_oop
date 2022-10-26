@@ -62,6 +62,8 @@ export class AuthService {
     }
 
     async checkIt(authHeader: string) {
+        console.log(authHeader)
+
         const bearer = authHeader.split(' ')[0]
         const token = authHeader.split(' ')[1]
 
