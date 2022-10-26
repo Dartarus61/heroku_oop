@@ -81,17 +81,14 @@ export class UserService {
         throw new HttpException('пользователь не найден', HttpStatus.NOT_FOUND)
     }
 
+    async getUserByLink(link: string) {
+        const user = await this.userRepository.findOne({ where: { acticationLink: link } })
+        if (!user) throw new HttpException('пользователь не найден', HttpStatus.NOT_FOUND)
+        return user
+    }
+
     async deleteUser(email: string) {
         const user = await this.getUserByEmail(email)
         await this.userRepository.destroy({ where: { id: user.id } })
-    }
-
-    async activate(value: string) {
-        const user = await this.userRepository.findOne({ where: { acticationLink: value } })
-        if (user) {
-            user.update({ isActivated: true })
-            return user
-        }
-        throw new HttpException('Пользователь не найден', HttpStatus.NOT_FOUND)
     }
 }

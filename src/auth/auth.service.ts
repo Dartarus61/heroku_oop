@@ -80,5 +80,11 @@ export class AuthService {
         return this.generateToken(user)
     }
 
+    async activate(value: string) {
+        const user = await this.userService.getUserByLink(value)
+        user.update({ isActivated: true })
+        return user
+    }
+
     async logout(token: string) {}
 }

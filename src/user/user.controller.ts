@@ -22,12 +22,6 @@ export class UserController {
         return this.UserService.createUser(Dto)
     }
 
-    @Get('/activ/:value')
-    activation(@Param('value') value:string) {
-        return this.UserService.activate(value)
-    }
-
-
     @ApiOperation({ summary: 'Поиск пользователя по почте' })
     @ApiResponse({ status: 200, type: User })
     @UseGuards(RolesGuard)
