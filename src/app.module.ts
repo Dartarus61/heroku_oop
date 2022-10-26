@@ -45,23 +45,25 @@ import { EjsAdapter } from '@nestjs-modules/mailer/dist/adapters/ejs.adapter'
             rootPath: path.resolve(__dirname, 'static'),
         }),
         SequelizeModule.forRoot(
-            /*  dialect: 'postgres',
+            /* dialect: 'postgres',
             host: process.env.DB_HOST,
             port: 5432,
-            username: process.env.DB_USER ,
-            password: process.env.DB_PASSWORD ,
-            database: process.env.DB_NAME , */
+            username: process.env.DB_USER,
+            password: process.env.DB_PASSWORD,
+            database: process.env.DB_NAME,
+            models: [User, UPost, Role, UserRoles, Comment, History, Details, Chapter, FileFolder],
+            sync: { force: true }, */
             {
                 uri: process.env.DATABASE_URL,
                 models: [User, UPost, Role, UserRoles, Comment, History, Details, Chapter, FileFolder],
                 autoLoadModels: true,
                 sync: { alter: true },
-                dialectOptions:{
-                    ssl:{
+                dialectOptions: {
+                    ssl: {
                         require: true,
                         rejectUnauthorized: false,
-                    }
-                }
+                    },
+                },
             }
         ),
         UserModule,

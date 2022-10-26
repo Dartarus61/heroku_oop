@@ -26,15 +26,16 @@ export class AuthService {
         return {
             token: this.jwtService.sign(payload, { secret: process.env.PRIVATE_KEY }),
             user: {
-                id:user.id,
-                email:user.email,
-                isActivated:user.isActivated
-            }
+                id: user.id,
+                email: user.email,
+                isActivated: user.isActivated,
+            },
         }
     }
 
     private async validateUser(userDto: LoginDto) {
         const user = await this.userService.getUserByEmail(userDto.email)
+        if (!user) throw new HttpException('Пользователь с таким емаил не найден', HttpStatus.BAD_REQUEST)
         const passwordEquals = await bcrypt.compare(userDto.password, user.password)
         if (user && passwordEquals) {
             return user
@@ -43,7 +44,7 @@ export class AuthService {
     }
 
     async login(userDto: LoginDto) {
-        console.log(process.env.PRIVATE_KEY)
+        console.log(userDto)
 
         const user = await this.validateUser(userDto)
         return this.generateToken(user)
@@ -57,6 +58,23 @@ export class AuthService {
         const NewPass = await bcrypt.hash(dto.newpass, 3)
         await user.update({ password: NewPass })
         return 'Пароль сменен'
+    }
+
+    async checkIt(authHeader: string) {
+        const bearer = authHeader.split(' ')[0]
+        const token = authHeader.split(' ')[1]
+
+        if (bearer !== 'Bearer' || !token) {
+            throw new UnauthorizedException({ message: 'Пользователь не авторизован' })
+        }
+        let tokenVerify: User
+        try {
+            tokenVerify = this.jwtService.verify(token, { secret: process.env.PRIVATE_KEY })
+        } catch (error) {
+            throw new HttpException('Ошибка авторазации', HttpStatus.BAD_REQUEST)
+        }
+        const user = await this.userService.getUserById(tokenVerify.id)
+        return this.generateToken(user)
     }
 
     async logout(token: string) {}

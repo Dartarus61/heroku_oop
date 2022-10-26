@@ -1,10 +1,11 @@
-import { Body, Controller, Post } from '@nestjs/common'
+import { Body, Controller, Post, Req } from '@nestjs/common'
 import { AuthService } from './auth.service'
 import { CreateUserDto } from '../user/dto/create_user.dto'
 import { ResetPassDto } from './dto/respass.dto'
 import { LoginDto } from './dto/login.dto'
 import { ApiBearerAuth, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger'
 import { User } from 'src/user/user.model'
+import { Request } from 'express'
 
 @ApiBearerAuth('JWT')
 @ApiTags('Авторизация')
@@ -38,5 +39,12 @@ export class AuthController {
     @Post('/reset')
     ResetPass(@Body() dto: ResetPassDto) {
         return this.AuthService.reset(dto)
+    }
+
+    @ApiOperation({ summary: 'Стартовая страница' })
+    @ApiResponse({ status: 201, type: User })
+    @Post('/refresh')
+    refresh(@Req() req: Request) {
+        return this.AuthService.checkIt(req.headers.authorization)
     }
 }
