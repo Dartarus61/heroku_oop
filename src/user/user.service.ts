@@ -31,7 +31,7 @@ export class UserService {
         user.roles = [role]
         const acticationLink = uuid.v4()
         await user.update({ acticationLink })
-        //this.mailService.sendActivation(user.email,user.acticationLink)
+        this.mailService.sendActivation(user.email, user.acticationLink)
 
         //this.create(log)
         //this.backupService.CreateLine(await this.backupService.createDto(log))

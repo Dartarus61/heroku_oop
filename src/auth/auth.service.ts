@@ -36,6 +36,7 @@ export class AuthService {
     private async validateUser(userDto: LoginDto) {
         const user = await this.userService.getUserByEmail(userDto.email)
         if (!user) throw new HttpException('Пользователь с таким емаил не найден', HttpStatus.BAD_REQUEST)
+        if (user.isActivated == false) throw new HttpException('Пользователь не подтвердил почту', HttpStatus.FORBIDDEN)
         const passwordEquals = await bcrypt.compare(userDto.password, user.password)
         if (user && passwordEquals) {
             return user
