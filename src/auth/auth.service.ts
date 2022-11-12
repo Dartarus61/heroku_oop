@@ -6,10 +6,12 @@ import { ResetPassDto } from './dto/respass.dto'
 import * as bcrypt from 'bcrypt'
 import { User } from 'src/user/user.model'
 import { LoginDto } from './dto/login.dto'
+import { OutputUserDto } from './dto/outputUser.dto'
+import { TokenService } from 'src/token/token.service'
 
 @Injectable()
 export class AuthService {
-    constructor(private userService: UserService, private jwtService: JwtService) {}
+    constructor(private userService: UserService, private jwtService: JwtService,private tokenService: TokenService) {}
 
     async registration(userDto: CreateUserDto) {
         const candidate = await this.userService.getUserByEmail(userDto.email)
@@ -86,5 +88,19 @@ export class AuthService {
         return this.generateToken(user)
     }
 
-    async logout(token: string) {}
+    async refresh(authorization: string) { 
+    const decoded = await this.tokenService.getDataFromToken(authorization)
+
+    const user = await this.userService.getUserById(decoded.id)
+    if(user.isActivated != decoded.isActivated) {
+      decoded.isActivated = user.isActivated
+    }
+      
+    return {
+      token: authorization.split(" ")[1],
+      user: {
+        ...new OutputUserDto(decoded)
+      }
+    }
+  }
 }

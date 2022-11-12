@@ -54,4 +54,9 @@ export class AuthController {
     activation(@Param('value') value: string) {
         return this.AuthService.activate(value)
     }
+    
+    @Get('/refresh')
+  refresh(@Headers("Authorization") authorization: string) {
+    return this.authService.refresh(authorization);
+  }
 }

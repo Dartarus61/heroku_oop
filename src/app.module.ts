@@ -22,6 +22,7 @@ import { Chapter } from './chapters/chapter.model'
 import { FileFolder } from './files/file.model'
 import { MailerModule } from '@nestjs-modules/mailer'
 import { EjsAdapter } from '@nestjs-modules/mailer/dist/adapters/ejs.adapter'
+import { TokenModule } from './token/token.module'
 @Module({
     imports: [
         MailerModule.forRoot({
@@ -74,6 +75,7 @@ import { EjsAdapter } from '@nestjs-modules/mailer/dist/adapters/ejs.adapter'
         CommentModule,
         BackupModule,
         ChaptersModule,
+        TokenModule
     ],
 })
 export class AppModule {}
